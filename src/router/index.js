@@ -16,11 +16,14 @@ const router = createRouter({
       name: 'typing',
       component: TypingView
     },
+    
     {
       path: '/recap',
       name: 'recap',
       component: RecapView
-    }
+    },
+   
+
   ]
 })
 
