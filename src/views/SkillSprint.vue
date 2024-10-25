@@ -28,17 +28,10 @@ const progress = ref(0);
 
 function pressKeyUp(event) {
     lastKey.value = event.key;
-    // console.log(lastKey.value);
 
     const listSpan = document.querySelectorAll(".maClasse")
-    // console.log(listSpan);
-    //  console.log( g++);
-    
-    inputText.value.push(lastKey.value);
 
-    // while (lastKey.value === "Backspace") {
-    //     inputText.value = inputText.value.slice(0, -1);
-    // }
+    inputText.value.push(lastKey.value);
 
     g++;
     for (let i = g; i < newPhrase.value.length; i++) {
