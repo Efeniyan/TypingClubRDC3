@@ -17,32 +17,37 @@
 
 
 <script setup>
-    import Header from '@/components/Header.vue';
-    import { onMounted, ref, computed } from 'vue';
 
+import Header from '@/components/Header.vue';
+import { onMounted, ref, computed } from 'vue';
 
+let RecapView = ref(false);
+let score = 15;
+let speed = 12;
+let duration = 60;
+let coleur = ref(false);
+let starCompleted = 0;
+let lastKey = ref('');
+let phrase = ref([]);
+let newPhrase = ref([]);
+let g = -1;
+let inputText = ref([]);
+let totalLength = newPhrase.value.length;
+const progress = ref(0);
+const precisionTabGreen = ref([]);
+const precisionTabOrange = ref([]);
+const precisonGreen = ref(null);
+const precisonOrange = ref(null);
+const precisionTotale = ref(null);
+const vitesse = ref(null);
+const totalSeconds = ref(null);
+const interval = ref(null);
+const format = ref("");
 
-    let lastKey = ref('');
-    let phrase = ref([]);
-    let newPhrase = ref([]);
-    let g = -1;
-    let inputText = ref([]);
-    const progress = ref(0);
-    const precisionTabGreen = ref([]);
-    const precisionTabOrange = ref([]);
-    const precisonGreen = ref(null);
-    const precisonOrange = ref(null);
-    const precisionTotale = ref(null);
-    const vitesse = ref(null);
-    const totalSeconds = ref(null);
-    const interval = ref(null);
-    const format = ref("");
-
-
-    function startChrono() {
-        interval.value = setInterval(() => {
-            totalSeconds.value++;
-        }, 1000);
+function startChrono() {
+    interval.value = setInterval(() => {
+        totalSeconds.value++;
+      }, 1000);
     };
 
     function stopTimer() {
@@ -86,33 +91,33 @@
                 } else {
                     listSpan[i].style.backgroundColor = "red";
 
-                }
-                setTimeout(() => {
-                    alert("Vous aviez fini le jeu")
-                    console.log(listSpan);
+            }
+            setTimeout(() => {
+                alert("Vous aviez fini le jeu")
+                console.log(listSpan);
 
-                    //Fonction de precision
+                //Fonction de precision
 
-                    listSpan.forEach((elem, index) => {
-                        if (elem.style.backgroundColor === "green") {
-                            precisionTabGreen.value.push(elem)
-                        }
-                    })
-                    console.log("precisionTabGreen", precisionTabGreen.value);
+                listSpan.forEach((elem, index) => {
+                    if (elem.style.backgroundColor === "green") {
+                        precisionTabGreen.value.push(elem)
+                    }
+                })
+                console.log("precisionTabGreen", precisionTabGreen.value);
 
-                    precisonGreen.value = Math.floor((precisionTabGreen.value.length / newPhrase.value.length) * 100);
-                    console.log("precisonGreen", precisonGreen.value);
+                precisonGreen.value = Math.floor((precisionTabGreen.value.length / newPhrase.value.length) * 100);
+                console.log("precisonGreen", precisonGreen.value);
 
-                    listSpan.forEach((elem, index) => {
-                        if (elem.style.backgroundColor === "orange") {
-                            precisionTabOrange.value.push(elem)
-                        }
-                    })
-                    console.log("precisionTabOrange", precisionTabOrange.value);
-                    precisonOrange.value = Math.floor(((precisionTabOrange.value.length / 2) / newPhrase.value.length * 100));
-                    console.log("precisonOrange", precisonOrange.value);
+                listSpan.forEach((elem, index) => {
+                    if (elem.style.backgroundColor === "orange") {
+                        precisionTabOrange.value.push(elem)
+                    }
+                })
+                console.log("precisionTabOrange", precisionTabOrange.value);
+                precisonOrange.value = Math.floor(((precisionTabOrange.value.length / 2) / newPhrase.value.length * 100));
+                console.log("precisonOrange", precisonOrange.value);
 
-                    precisionTotale.value = precisonGreen.value + precisonOrange.value;
+                precisionTotale.value = precisonGreen.value + precisonOrange.value;
 
                     console.log(" precisionTotale", precisionTotale.value);
 
@@ -129,47 +134,57 @@
 
 
 
-                }, 500)
-            } else {
+            }, 500)
+        } else {
+
+            if (lastKey.value === "Backspace") {
+                inputText.value = inputText.value.slice(0, -2);
+            }
 
 
-                if (lastKey.value === "Backspace") {
-                    g -= 2;
-                    listSpan[i - 1].style.backgroundColor = "brown";
-                    listSpan[i - 1].style.borderBottom = "solid 2px";
-                    if (listSpan[0] === "") {
-                        inputText.value.length = 0;
-                    }
-                    return;
+            progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
+
+            if (lastKey.value === "Backspace") {
+                console.log(lastKey.value);
+
+                g -= 2;
+                listSpan[i - 1].style.backgroundColor = "brown";
+                listSpan[i - 1].style.borderBottom = "solid 2px";
+                if (listSpan[0] === "") {
+                    inputText.value.length = 0;
                 }
-                else if (newPhrase.value[i] === lastKey.value) {
+                return;
 
-                    if (listSpan[i].style.backgroundColor === "brown") {
-                        console.log(listSpan[i].style.backgroundColor);
+            }
+            else if (newPhrase.value[i] === lastKey.value) {
+                if (listSpan[i].style.backgroundColor === "brown") {
+                    console.log(listSpan[i].style.backgroundColor);
 
-                        listSpan[i].style.backgroundColor = "orange";
+                    listSpan[i].style.backgroundColor = "orange";
 
-                        return;
-                    } else {
-                        listSpan[i].style.backgroundColor = "green";
-                        listSpan[i].style.borderBottom = "none";
-                        listSpan[i + 1].style.borderBottom = "solid 2px";
-                        return;
-                    }
-                    // console.log(newPhrase.value.length);
-                    // return;
+                    return;
                 } else {
-                    listSpan[i].style.backgroundColor = "red";
+                    listSpan[i].style.backgroundColor = "green";
                     listSpan[i].style.borderBottom = "none";
                     listSpan[i + 1].style.borderBottom = "solid 2px";
-                    console.log(progress.value);
                     return;
-                };
-
-
+                }
+                // console.log(newPhrase.value.length);
+                // return;
+            } else {
+                listSpan[i].style.backgroundColor = "red";
+                listSpan[i].style.borderBottom = "none";
+                listSpan[i + 1].style.borderBottom = "solid 2px";
+                console.log(progress.value);
+                return;
             };
-        }
-    };
+
+
+        };
+    }
+
+
+};
 
     function choosePhrase() {
         const tableau = [
@@ -179,15 +194,50 @@
             "cum esse quae quaerat quam excepturi.",
         ]
 
-        phrase.value = tableau[Math.floor(Math.random() * (tableau.length))];
-        // console.log(phrase.value);
-        return phrase;
-    };
-    function maPhrase() {
-        newPhrase.value = phrase.value.split("");
-        console.log(newPhrase.value);
-        return newPhrase.value;
-    };
+    phrase.value = tableau[Math.floor(Math.random() * (tableau.length))];
+    // console.log(phrase.value);
+    return phrase;
+};
+function maPhrase() {
+    newPhrase.value = phrase.value.split("");
+    console.log(newPhrase.value);
+    return newPhrase.value;
+};
+
+function toggleRecap() {
+    RecapView.value = !RecapView.value;
+    updateScore(500);
+    console.log(RecapView.value);
+
+};
+
+function updateScore(newScore) {
+    score = newScore;
+    updateStars(newScore); // Mettre à jour les étoiles
+};
+
+function updateStars(score) {
+    if (score >= 1000) {
+        // coleur.value = true;
+        starCompleted = 5;
+    } else if (score >= 800) {
+        // star.classList.add('yellow');
+        starCompleted = 4;
+    } else if (score >= 700) {
+        // star.classList.add('yellow');
+        starCompleted = 3;
+    } else if (score >= 500) {
+        // star.classList.add('yellow');
+        starCompleted = 2;
+    } else if (score >= 200) {
+        // star.classList.add('yellow');
+        starCompleted = 1;
+    }
+
+};
+
+
+
 
     onMounted(() => {
         window.addEventListener('keyup', (event) => pressKeyUp(event));
@@ -252,5 +302,278 @@
     background: #4caf50;
     /* Couleur de progression */
     transition: width 0.3s ease-in-out;
+}
+
+/**************************************  Css REcapView ***********************************************/
+
+/* Ajoutez une classe pour les étoiles jaunes */
+.star {
+    font-size: 24px;
+    /* Ajustez la taille selon vos préférences */
+}
+
+.star.yellow img {
+    filter: brightness(1.5);
+    /* Exemple pour éclaircir l'étoile */
+}
+
+.star-container {
+    display: flex;
+    /* Changer la mise en page des étoiles */
+    justify-content: center;
+    /* Centrer les étoiles */
+}
+
+.recap {
+    /* background-image: url('../assets/cl6.jpg'); */
+    /* background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; */
+
+    background-image: url("../assets/cl9.jpg");
+    background: transparent;
+    background-size: cover;
+    backdrop-filter: blur(50px);
+
+
+    width: 50%;
+    margin: auto;
+
+    /* height: 850px;  */
+    /*********/
+    /* padding-top: 150px; */
+    background-color: #FFFFFF00;
+    position: absolute;
+    /* top: 0;
+  left: 250px; */
+
+
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+
+    /************************ */
+
+
+
+}
+
+h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sommaire {
+    text-align: center;
+    margin: 20px;
+}
+
+.summary-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permet de passer à la ligne */
+    justify-content: center;
+    margin: 20px 0;
+    gap: 100px;
+    /* Réduit l'écart sur les petits écrans */
+}
+
+.circle {
+    border: 5px solid;
+    /* border-radius: 50%; */
+    width: 150px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.dure {
+    text-align: center;
+}
+
+.circle-content {
+    font-size: 16px;
+    text-align: center;
+}
+
+/* 
+.star-container {
+  position: relative;
+  height: 100px;
+  margin: auto;
+  padding-top: 2%;
+}
+
+.star {
+  position: absolute;
+  font-size: 24px;
+}
+
+.star:nth-child(1) {
+  left: 30%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.star:nth-child(2) {
+  left: 40%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.star:nth-child(3) {
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+}
+
+.star:nth-child(4) {
+  left: 60%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.star:nth-child(5) {
+  left: 70%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+.btnR {
+    text-align: center;
+    padding: 20px;
+    /* background-color: red; */
+
+}
+
+button {
+    color: red;
+    background-color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .circle-content {
+        font-size: 14px;
+    }
+
+    .star {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .circle-content {
+        font-size: 12px;
+    }
+
+    .star {
+        font-size: 18px;
+    }
+}
+
+/* *********css confetti */
+.Rcp {
+    background: #f0f8ff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+.sommaire h2 {
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+.star-container {
+    margin: 10px 0;
+}
+
+.star {
+    font-size: 24px;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.circle {
+    background: black;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+}
+
+.circle:hover {
+    transform: scale(1.05);
+}
+
+.circle-content p {
+    margin: 5px 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.dure {
+    color: #9b5b5b;
+    font-size: 14px;
+}
+
+.btnR {
+    margin-top: 20px;
+}
+
+button {
+    /* background-color: #4CAF50; */
+    /* color: black; */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    /* background-color: #45a049; */
+}
+
+/************************************ */
+.star-container {
+    display: flex;
+    /* Changer la mise en page des étoiles */
+    justify-content: center;
+    /* Centrer les étoiles */
+}
+
+.star {
+    font-size: 24px;
+    /* Ajustez la taille selon vos préférences */
+    margin: 0 2px;
+    /* Ajoutez un espace entre les étoiles */
 }
 </style>
