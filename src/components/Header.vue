@@ -3,7 +3,7 @@
 
 <template>
   <nav>
-    <span>SkillSprint</span>
+    <span><img src="../assets/svg/skillSprinttt.jpg" alt="LOGO" class="logo"></span>
     <ul>
       <li>
         <RouterLink to="/">
@@ -25,7 +25,7 @@
 
 <style scoped>
 nav {
-  background-color: #ffffff; /* Fond blanc pour un look épuré */
+  background-color: #b7beba; /* Fond blanc pour un look épuré */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre pour la profondeur */
   padding: 10px 20px; /* Espacement interne */
   border-radius: 8px; /* Coins arrondis */
@@ -58,6 +58,22 @@ img {
   height: 34px; /* Taille des icônes */
   cursor: pointer; /* Curseur pointer sur hover */
   transition: transform 0.2s, filter 0.2s; /* Transitions pour les effets */
+}
+
+.logo {
+  border-radius: 30px;
+  border: 2px dashed orange;
+  width: 100px;
+  box-shadow: 1px 1px 1px 1px rgba(12, 12, 12, 0.205);
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes example {
+to { left: 0px}
+from { left: 100px}
 }
 
 img:hover {
