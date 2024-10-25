@@ -1,112 +1,95 @@
-<script>
-import { ref } from 'vue';
-function createComponent() {
-  return {
-    data() {
-      return {
-        RecapView: false,
-        // score: 15,
-        speed: 12,
-        duration: 60,
-        coleur: ref(false),
-        starCompleted: null
-      };
-    },
-    // const coleur = ref(false);
-    methods: {
-      toggleRecap() {
-        this.RecapView = !this.RecapView;
-        this.updateScore(900)
-      },
-
-      updateScore(newScore) {
-        this.score = newScore;
-        this.updateStars(newScore); // Mettre à jour les étoiles
-      },
-
-      updateStars(score) {
-        if (score >= 1000) {
-          // coleur.value = true;
-          this.starCompleted = 5;
-        } else if (score >= 800) {
-          // star.classList.add('yellow');
-          this.starCompleted = 4;
-        } else if (score >= 700) {
-          // star.classList.add('yellow');
-          this.starCompleted = 3;
-        } else if (score >= 500) {
-          // star.classList.add('yellow');
-          this.starCompleted = 2;
-        } else if (score >= 200) {
-          // star.classList.add('yellow');
-          this.starCompleted = 1;
-        }
-
-      },
-
-      animateText(element, text, delay) {
-        element.innerHTML = ""; // Vider l'élément
-        const letters = text.split("");
-
-        letters.forEach((letter, index) => {
-          setTimeout(() => {
-            element.innerHTML += letter; // Ajouter la lettre
-            element.style.opacity = 1; // Rendre le texte visible
-          }, index * delay); // Délai entre chaque lettre
-        });
-      },
-      startAnimation() {
-        const titleText = "Bienvenue au Skill Sprint!";
-        const paragraphText = "Améliorez votre dactylographie en vous amusant!";
-        const h2Text = "Prêt à commencer?";
-        const titleElement = document.getElementById("animation-title");
-        const paragraphElement = document.getElementById("animation-paragraph");
-        const h2Element = document.getElementById("animation-h2");
-        const startButton = document.getElementById("start-button");
-
-        // Affichez le bouton dès le départ
-        startButton.style.display = "block";
-
-        // Animation très rapide pour le titre
-        this.animateText(titleElement, titleText, 30); // 30 ms pour le titre
-
-        setTimeout(() => {
-          // Animation très rapide pour le paragraphe
-          this.animateText(paragraphElement, paragraphText, 70); // 70 ms pour le paragraphe
-        }, titleText.length * 30); // Délai après le titre
-
-        setTimeout(() => {
-          // Animation très rapide pour le h2
-          this.animateText(h2Element, h2Text, 70); // 70 ms pour le h2
-        }, (titleText.length + paragraphText.length) * 30 + 30); // Délai après le paragraphe
-      }
+<script setup>
+import { ref, onMounted } from 'vue';
 
 
-    },
+const RecapView = ref(false);
+const score = ref(15); // Déclaration de score
+const speed = ref(12);
+const duration = ref(60);
+const coleur = ref(false);
+const starCompleted = ref(null);
 
-    mounted() {
-      // this.updateScore(1000); 
-      this.startAnimation(); // Démarrer l'animation après le montage
-    }
-  };
+function toggleRecap() {
+  RecapView.value = !RecapView.value;
+  updateScore(900); // Appel de fonction corrigé
 }
 
-export default createComponent();
+function updateScore(newScore) {
+  score.value = newScore;
+  updateStars(newScore); // Appel de fonction corrigé
+}
+
+function updateStars(score) {
+  if (score >= 1000) {
+    starCompleted.value = 5;
+  } else if (score >= 800) {
+    starCompleted.value = 4;
+  } else if (score >= 700) {
+    starCompleted.value = 3;
+  } else if (score >= 500) {
+    starCompleted.value = 2;
+  } else if (score >= 200) {
+    starCompleted.value = 1;
+  } else {
+    starCompleted.value = 0; // Valeur par défaut
+  }
+}
+
+function animateText(element, text, delay) {
+  element.innerHTML = ""; // Vider l'élément
+  const letters = text.split("");
+
+  letters.forEach((letter, index) => {
+    setTimeout(() => {
+      element.innerHTML += letter; // Ajouter la lettre
+      element.style.opacity = 1; // Rendre le texte visible
+    }, index * delay); // Délai entre chaque lettre
+  });
+}
+
+function startAnimation() {
+  const titleText = "Bienvenue au Skill Sprint!"; // Déclaration
+  const paragraphText = "Améliorez votre dactylographie en vous amusant!"; // Déclaration
+  const h2Text = "Prêt à commencer?"; // Déclaration
+  const titleElement = document.getElementById("animation-title");
+  const paragraphElement = document.getElementById("animation-paragraph");
+  const h2Element = document.getElementById("animation-h2");
+  const startButton = document.getElementById("start-button");
+
+  startButton.style.display = "block";
+
+  animateText(titleElement, titleText, 30); // 30 ms pour le titre
+
+  setTimeout(() => {
+    animateText(paragraphElement, paragraphText, 70); // 70 ms pour le paragraphe
+  }, titleText.length * 30);
+
+  setTimeout(() => {
+    animateText(h2Element, h2Text, 70); // 70 ms pour le h2
+  }, (titleText.length + paragraphText.length) * 30 + 30);
+}
+
+onMounted(() => {
+  startAnimation(); // Démarrer l'animation après le montage
+});
+
+
+
 
 </script>
 
 <template>
-<!-- Déconnection -->
+  <!-- Déconnection -->
 
-<div class="ntb">
-  <router-link to="/"><button class="deconnecte">Deconection</button></router-link>
-</div>
-
-
+  <div class="ntb">
+    <router-link to="/"><button class="deconnecte">Deconection</button></router-link>
+  </div>
 
 
 
-<!-- ********************* -->
+
+
+  <!-- ********************* -->
   <div class="home1"></div>
   <div class="home2">
     <div class="home">
@@ -129,7 +112,7 @@ export default createComponent();
     <div class="recap" v-if="RecapView">
       <div class="sommaire">
         <h2>Récapitulatif de votre frappe</h2>
-       
+
         <div id="stars">
           <span v-for="i in 5" :class="{ star: coleur }"><svg
               :fill="(starCompleted !== null && starCompleted >= i) ? 'yellow' : '#000000'" width="50px" height="50px"
@@ -174,10 +157,14 @@ export default createComponent();
 
 /*  *********************************** */
 
-html, body {
-    height: 100%; /* Prend toute la hauteur */
-    margin: 0; /* Supprime les marges par défaut */
-    overflow: hidden; /* Désactive le défilement */
+html,
+body {
+  height: 100%;
+  /* Prend toute la hauteur */
+  margin: 0;
+  /* Supprime les marges par défaut */
+  overflow: hidden;
+  /* Désactive le défilement */
 }
 
 #animation-title,
@@ -197,10 +184,14 @@ html, body {
   backdrop-filter: blur(2px);
   text-align: center;
   display: flex;
-  justify-content: center; /* Centre le contenu horizontalement */
-  align-items: center; /* Centre le contenu verticalement */
-  flex-direction: column; /* Aligne les éléments en colonne */
-  height: 100vh; /* Optionnel : occupe toute la hauteur de la fenêtre */
+  justify-content: center;
+  /* Centre le contenu horizontalement */
+  align-items: center;
+  /* Centre le contenu verticalement */
+  flex-direction: column;
+  /* Aligne les éléments en colonne */
+  height: 100vh;
+  /* Optionnel : occupe toute la hauteur de la fenêtre */
 }
 
 .home1 {
@@ -279,11 +270,11 @@ p {
 }
 
 
- .aligne{
+.aligne {
   /* text-align: center; */
   margin-top: 20px;
   padding-left: 50px;
- }
+}
 
 /**************************************  Css REcapView ***********************************************/
 
@@ -433,7 +424,7 @@ button {
   max-width: 400px;
   margin: auto;
   text-align: center;
-  
+
 }
 
 .sommaire h2 {
@@ -524,26 +515,37 @@ button:hover {
 
 
 .ntb {
-  position: fixed; /* Positionnement fixe */
-  top: 20px; /* Distance du haut de la page */
-  right: 20px; /* Distance du côté droit de la page */
-  z-index: 1000; /* Assure que le bouton est au-dessus des autres éléments */
+  position: fixed;
+  /* Positionnement fixe */
+  top: 20px;
+  /* Distance du haut de la page */
+  right: 20px;
+  /* Distance du côté droit de la page */
+  z-index: 1000;
+  /* Assure que le bouton est au-dessus des autres éléments */
 }
 
 .deconnecte {
-  background-color: #ff4d4d; /* Couleur de fond rouge */
-  color: white; /* Couleur du texte */
-  border: none; /* Pas de bordure */
-  border-radius: 5px; /* Coins arrondis */
-  padding: 10px 20px; /* Espacement intérieur */
-  font-size: 16px; /* Taille de police */
-  cursor: pointer; /* Changer le curseur au survol */
-  transition: background-color 0.3s ease; /* Animation au survol */
+  background-color: #ff4d4d;
+  /* Couleur de fond rouge */
+  color: white;
+  /* Couleur du texte */
+  border: none;
+  /* Pas de bordure */
+  border-radius: 5px;
+  /* Coins arrondis */
+  padding: 10px 20px;
+  /* Espacement intérieur */
+  font-size: 16px;
+  /* Taille de police */
+  cursor: pointer;
+  /* Changer le curseur au survol */
+  transition: background-color 0.3s ease;
+  /* Animation au survol */
 }
 
 .deconnecte:hover {
-  background-color: #ff1a1a; /* Couleur au survol */
+  background-color: #ff1a1a;
+  /* Couleur au survol */
 }
-
-
 </style>
