@@ -10,53 +10,8 @@
     </div>
     <div class="chrono">
         <p>{{ format }}</p>
-    </div>
-    <button class="btn" id="start-button" @click="toggleRecap()" style=""> commencer</button>
-
-
-    <div class="Rcp">
-        <div class="recap" v-if="RecapView">
-            <div class="sommaire">
-                <h2>Récapitulatif de votre frappe</h2>
-                <!-- <div class="star-container">
-                    <span v-for="index in stars" :key="index" class="star"><img src="../assets/etoile.svg" alt=""
-                            :class="{ yellow: stars > 0 }"></span>
-                    <span v-if="stars < 5" v-for="index in (5 - stars)" :key="'empty-' + index" class="star"><img
-                            src="../assets/etoile.svg" alt=""></span>
-                </div> -->
-                <div id="stars">
-                    <span v-for="i in 5" :class="{ star: coleur }"><svg
-                            :fill="(starCompleted !== null && starCompleted >= i) ? 'yellow' : '#000000'" width="50px"
-                            height="50px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.2">
-                                <path
-                                    d="M132.41106,190.73266l50.43543,31.95385c6.44693,4.08451,14.45124-1.99032,12.53819-9.51579l-14.57192-57.32241a8.75742,8.75742,0,0,1,2.83756-8.87589l45.2273-37.64345c5.94268-4.9462,2.87542-14.80876-4.75965-15.30428l-59.06388-3.83326a8.41836,8.41836,0,0,1-7.24792-5.3506l-22.02834-55.473a8.31887,8.31887,0,0,0-15.55566,0L98.19383,84.84083a8.41836,8.41836,0,0,1-7.24792,5.3506L31.882,94.02469c-7.63507.49552-10.70233,10.35808-4.75965,15.30428l45.2273,37.64345a8.75742,8.75742,0,0,1,2.83756,8.87589L61.6734,209.00846c-2.29566,9.03056,7.30952,16.32036,15.04583,11.41895l46.86971-29.69475A8.21431,8.21431,0,0,1,132.41106,190.73266Z" />
-                            </g>
-                            <path
-                                d="M187.2627,231.9834a16.22513,16.22513,0,0,1-8.69825-2.53931l-50.43457-31.95361v.00024a.21827.21827,0,0,0-.25976,0L81,227.1853a17.80084,17.80084,0,0,1-20.08008-.63134,18.36991,18.36991,0,0,1-6.999-19.51661l13.51367-53.16a.77184.77184,0,0,0-.20215-.75562L22.00391,115.47791a16.65647,16.65647,0,0,1-5.16407-18.06019A16.36086,16.36086,0,0,1,31.36328,86.0415l59.06445-3.83325a.45615.45615,0,0,0,.33008-.31885l22.0293-55.47424a16.31782,16.31782,0,0,1,30.42578.00037l22.0293,55.47265a.45648.45648,0,0,0,.3291.32007l59.06543,3.83313a16.36115,16.36115,0,0,1,14.52344,11.37634,16.656,16.656,0,0,1-5.16407,18.05994l-45.22754,37.64356a.76927.76927,0,0,0-.20214.75659l14.57129,57.3219a16.6353,16.6353,0,0,1-6.3418,17.67138A16.21482,16.21482,0,0,1,187.2627,231.9834ZM128,181.46558a16.23665,16.23665,0,0,1,8.69238,2.509v.00024l50.43555,31.95386a.579.579,0,0,0,.14551.07373.818.818,0,0,0,.30566-.2666.646.646,0,0,0,.05274-.59424l-14.57227-57.32226a16.812,16.812,0,0,1,5.47363-16.99622l45.22657-37.64294a.64454.64454,0,0,0,.18652-.81043c-.11328-.3468-.23145-.35449-.34668-.36194l-59.06445-3.83325a16.4984,16.4984,0,0,1-14.16407-10.38232L128.3418,32.32043C128.21484,32,128.13379,32,128,32s-.21484,0-.3418.32007L105.62891,87.79346a16.49935,16.49935,0,0,1-14.165,10.3811l-59.06348,3.83325c-.11523.00745-.2334.01514-.34668.36194a.64479.64479,0,0,0,.18652.81055l45.22754,37.64331a16.81409,16.81409,0,0,1,5.47364,16.99512L69.42676,210.97949a2.334,2.334,0,0,0,.88672,2.62232,1.71518,1.71518,0,0,0,2.123.06811l46.8711-29.69507A16.23481,16.23481,0,0,1,128,181.46558Z" />
-                        </svg></span>
-                </div>
-            </div>
-
-            <div class="summary-container">
-                <div class="circle">
-                    <div class="circle-content">
-                        <p><strong>{{ speed }} MPM</strong></p>
-                    </div>
-                    <p class="dure">Vitesse</p>
-                </div>
-
-                <div class="circle duration-circle">
-                    <div class="circle-content">
-                        <p><strong>{{ duration }} s</strong></p>
-                    </div>
-                    <p class="dure">Durée</p>
-                </div>
-            </div>
-            <div class="btnR">
-                <router-link to="/"><button><img src="../assets/repeate.svg" alt=""></button></router-link>
-            </div>
-        </div>
+        <p>Precision: {{ precisionTotale }}%</p>
+        <p>Vitesse: {{ vitesse }}MPM</p>
     </div>
 </template>
 
@@ -92,37 +47,46 @@ const format = ref("");
 function startChrono() {
     interval.value = setInterval(() => {
         totalSeconds.value++;
-    }, 1000);
-};
+      }, 1000);
+    };
 
-
-function pressKeyUp(event) {
-
-    startChrono();
-    format.value = computed(() => {
-        const minutes = Math.floor(totalSeconds.value / 60);
-        const seconds = totalSeconds.value % 60;
-
-        return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
-    });
-    lastKey.value = event.key;
-
-    // console.log(event);
-
-    const listSpan = document.querySelectorAll(".maClasse")
-
-    inputText.value.push(lastKey.value);
-
-
-    g++;
-    for (let i = g; i < newPhrase.value.length; i++) {
-        progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
-        if (g === newPhrase.value.length - 1) {
-            if (newPhrase.value[i] === lastKey.value) {
-                listSpan[i].style.backgroundColor = "green";
-
-            } else {
-                listSpan[i].style.backgroundColor = "red";
+    function stopTimer() {
+       clearInterval(interval.value);
+    };
+    
+    function pressKeyUp(event) {
+        
+        format.value = computed(() => {
+            const minutes = Math.floor(totalSeconds.value / 60);
+            const seconds = totalSeconds.value % 60;
+            
+            return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+        } );
+        lastKey.value = event.key;
+        
+        // console.log(event);
+        
+        const listSpan = document.querySelectorAll(".maClasse")
+        // console.log(listSpan);
+        //  console.log( g++);
+        inputText.value += lastKey.value;
+        // console.log(inputText);
+        
+        
+        
+        g++;
+        for (let i = g; i < newPhrase.value.length ; i++) {
+        if (inputText.value.length === 1 && listSpan[i].style.backgroundColor !== "brown") {
+            startChrono();
+        }
+        
+    progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
+    if (g === newPhrase.value.length -1 ) {
+        if (newPhrase.value[i] === lastKey.value) {
+            listSpan[i].style.backgroundColor = "green";
+            
+        } else {
+            listSpan[i].style.backgroundColor = "red";
 
             }
             setTimeout(() => {
@@ -152,18 +116,18 @@ function pressKeyUp(event) {
 
                 precisionTotale.value = precisonGreen.value + precisonOrange.value;
 
-                console.log(" precisionTotale", precisionTotale.value);
-
-                //Fonction de vitesse par mot
-                let x = newPhrase.value.join("");
-                x = x.split(" ");
-                vitesse.value = Math.floor((x.length * 60) / totalSeconds.value);
-                console.log(x);
-                console.log("vitesse:", vitesse.value);
-
-
-
-                return
+            console.log(" precisionTotale",  precisionTotale.value);
+            
+            //Fonction de vitesse par mot
+            let x = newPhrase.value.join("");
+            x = x.split(" ");
+            vitesse.value = Math.floor((x.length * 60) / totalSeconds.value);
+            console.log( x);
+            console.log("vitesse:", vitesse.value);
+            
+            stopTimer();
+            
+            return
 
 
 
