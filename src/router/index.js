@@ -4,13 +4,15 @@ import RecapView from '@/views/RecapView.vue'
 import TypingView from '@/views/TypingView.vue'
 import Login from '@/views/Login.vue'
 import Sign from '@/views/sign.vue'
+import Principale from '@/views/principale.vue'
+// import Deconnection from '@/assets/Deconnection.vue'
 
 let isAuthenticated = false; 
 const routes = [
   {
     path: '/',
-    name: 'login',
-    component: Login
+    name: 'principale',
+    component: Principale
   },
   {
     path: '/sign',
@@ -32,7 +34,12 @@ const routes = [
     path: '/recap',
     name: 'recap',
     component: RecapView
-  }
+  },
+  // {
+  //   path: '/deco',
+  //   name: 'deco',
+  //   component: Deconnection
+  // }
 ];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

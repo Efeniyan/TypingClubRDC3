@@ -60,8 +60,9 @@ onMounted(() => {
 
 
 <template>
+    <div></div>
     <div class="main-container">
-        <div><img src="../assets/cl8.jpg" alt=""></div>
+        <div class="imge"><img src="../assets/sprint.jpg" alt=""></div>
         <div class="login-container">
             <h2>Connexion</h2>
             <form @submit.prevent="submit">
@@ -87,6 +88,7 @@ onMounted(() => {
 
 
 <style scoped>
+
 .main-container {
     margin: 0;
     padding: 0;
