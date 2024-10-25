@@ -54,17 +54,61 @@
 </template>
 
 <style scoped>
+/**************************************  Css REcapView ***********************************************/
+
+/* Ajoutez une classe pour les étoiles jaunes */
+.star {
+  font-size: 24px;
+  /* Ajustez la taille selon vos préférences */
+}
+
+.star.yellow img {
+  filter: brightness(1.5);
+  /* Exemple pour éclaircir l'étoile */
+}
+
+.star-container {
+  display: flex;
+  /* Changer la mise en page des étoiles */
+  justify-content: center;
+  /* Centrer les étoiles */
+}
+
 .recap {
   /* background-image: url('../assets/cl6.jpg'); */
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-position: center;
+  background-size: cover; */
+
+  background-image: url("../assets/cl9.jpg");
+  background: transparent;
   background-size: cover;
-  width: 100%;
-  height: 850px; 
-  padding-top: 150px; 
+  backdrop-filter: blur(50px);
+
+
+  width: 50%;
+  margin: auto;
+
+  /* height: 850px;  */
+  /*********/
+  /* padding-top: 150px; */
+  background-color: #FFFFFF00;
+  position: absolute;
+  /* top: 0;
+  left: 250px; */
+
+
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+  /************************ */
+
+
 
 }
-h2{
+
+h2 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -75,79 +119,47 @@ h2{
 
 .summary-container {
   display: flex;
-  flex-wrap: wrap; /* Permet de passer à la ligne */
+  flex-wrap: wrap;
+  /* Permet de passer à la ligne */
   justify-content: center;
   margin: 20px 0;
-  gap: 100px; /* Réduit l'écart sur les petits écrans */
+  gap: 100px;
+  /* Réduit l'écart sur les petits écrans */
 }
 
 .circle {
   border: 5px solid;
-  border-radius: 50%;
-  width: 100px; 
-  height: 100px; 
+  /* border-radius: 50%; */
+  width: 150px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: white;
+}
+
+.dure {
+  text-align: center;
 }
 
 .circle-content {
-  font-size: 16px; 
+  font-size: 16px;
   text-align: center;
 }
 
-.star-container {
-  position: relative;
-  height: 100px;
-  margin: auto;
-  padding-top: 2%;
-}
-
-.star {
-  position: absolute;
-  font-size: 24px;
-}
-
-.star:nth-child(1) {
-  left: 30%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(2) {
-  left: 40%;
-  top: 30%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(3) {
-  left: 50%;
-  top: 10%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(4) {
-  left: 60%;
-  top: 30%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(5) {
-  left: 70%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.btn {
+.btnR {
   text-align: center;
-  padding: 20px; 
+  padding: 20px;
   /* background-color: red; */
+
 }
-button{
+
+button {
   color: red;
   background-color: black;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  padding: 20px;
 }
 
 
@@ -162,7 +174,7 @@ button{
   }
 
   .star {
-    font-size: 20px; 
+    font-size: 20px;
   }
 }
 
@@ -177,8 +189,131 @@ button{
   }
 
   .star {
-    font-size: 18px; 
+    font-size: 18px;
   }
 }
+
+/* *********css confetti */
+.Rcp {
+  background: #f0f8ff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  
+}
+
+.sommaire h2 {
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.star-container {
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 24px;
+}
+
+.summary-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.circle {
+  background: black;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+}
+
+.circle:hover {
+  transform: scale(1.05);
+}
+
+.circle-content p {
+  margin: 5px 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.dure {
+  color: #9b5b5b;
+  font-size: 14px;
+}
+
+.btnR {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  /* background-color: #4CAF50; */
+  /* color: black; */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  /* background-color: #45a049; */
+}
+
+/************************************ */
+.star-container {
+  display: flex;
+  /* Changer la mise en page des étoiles */
+  justify-content: center;
+  /* Centrer les étoiles */
+}
+
+.star {
+  font-size: 24px;
+  /* Ajustez la taille selon vos préférences */
+  margin: 0 2px;
+  /* Ajoutez un espace entre les étoiles */
+}
+
+
+
+/* Déconnection  */
+
+
+
+.ntb {
+  position: fixed; /* Positionnement fixe */
+  top: 20px; /* Distance du haut de la page */
+  right: 20px; /* Distance du côté droit de la page */
+  z-index: 1000; /* Assure que le bouton est au-dessus des autres éléments */
+}
+
+.deconnecte {
+  background-color: #ff4d4d; /* Couleur de fond rouge */
+  color: white; /* Couleur du texte */
+  border: none; /* Pas de bordure */
+  border-radius: 5px; /* Coins arrondis */
+  padding: 10px 20px; /* Espacement intérieur */
+  font-size: 16px; /* Taille de police */
+  cursor: pointer; /* Changer le curseur au survol */
+  transition: background-color 0.3s ease; /* Animation au survol */
+}
+
+.deconnecte:hover {
+  background-color: #ff1a1a; /* Couleur au survol */
+}
+
+
 
 </style>
