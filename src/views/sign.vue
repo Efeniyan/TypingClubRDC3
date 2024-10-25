@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -63,7 +63,6 @@ onMounted(() => {
 
     <div class="main-signup-container">
 
-        <div> <img src="../assets/cl8.jpg" alt=""></div>
         <div class="signup-container">
             <h2>Sign Up</h2>
             <form>
@@ -78,6 +77,7 @@ onMounted(() => {
                 </p>
             </div>
         </div>
+        <div> <img src="../assets/sprint.jpg" alt=""></div>
     </div>
 
 </template>
@@ -88,10 +88,10 @@ onMounted(() => {
     margin: 0;
     padding: 0;
     height: 100vh;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start   font-family: Verdana, Geneva, Tahoma, sans-serif;2P', cursive;
     /* Utilise une police de style rétro */
     /* background: linear-gradient(135deg, #1e3c72, #2a5298); */
-    background-color: #778899;
+    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -132,7 +132,7 @@ input[type="email"] {
 input[type="text"]::placeholder,
 input[type="password"]::placeholder,
 input[type="email"]::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.7);
 }
 
 input[type="text"]:focus,

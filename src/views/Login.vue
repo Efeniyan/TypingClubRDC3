@@ -60,7 +60,6 @@ onMounted(() => {
 
 
 <template>
-    <div></div>
     <div class="main-container">
         <div class="imge"><img src="../assets/sprint.jpg" alt=""></div>
         <div class="login-container">
@@ -88,7 +87,10 @@ onMounted(() => {
 
 
 <style scoped>
-
+.imge{
+    /* border: black solid 1px; */
+    /* background-color: #87CEFA; */
+}
 .main-container {
     margin: 0;
     padding: 0;

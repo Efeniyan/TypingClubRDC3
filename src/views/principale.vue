@@ -1,18 +1,30 @@
 <script setup>
 import Login from './Login.vue';
 import Charger from './Charger.vue';
+import { onMounted } from 'vue';
 
-setTimeout(() =>{
+function affichage() {
+    const elem = document.querySelectorAll(".login");
+    elem[1].style.display = "none"
+    setTimeout(() =>{
+    elem[0].style.display = "none"
+    elem[1].style.display = "block"
+
+},5000)
     
-},10000)
+}
+
+onMounted(() => {
+    affichage();
+})
 </script>
 
 
 <template>
-<div id="charger">
+<div class="login">
     <Charger></Charger>
 </div>
-<div id="login">
+<div class="login">
     <Login></Login>
 </div>
 
@@ -21,7 +33,5 @@ setTimeout(() =>{
 
 
 <style scoped>
-#charger {
-    display: none;
-}
+
 </style>
