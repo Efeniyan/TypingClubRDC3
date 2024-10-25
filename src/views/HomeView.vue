@@ -9,55 +9,10 @@ const duration = ref(60);
 const coleur = ref(false);
 const starCompleted = ref(null);
 
-function toggleRecap() {
-  RecapView.value = !RecapView.value;
-  updateScore(900); // Appel de fonction corrigé
-}
-
-function updateScore(newScore) {
-  score.value = newScore;
-  updateStars(newScore); // Appel de fonction corrigé
-}
-
-function updateStars(score) {
-  if (score >= 1000) {
-    starCompleted.value = 5;
-  } else if (score >= 800) {
-    starCompleted.value = 4;
-  } else if (score >= 700) {
-    starCompleted.value = 3;
-  } else if (score >= 500) {
-    starCompleted.value = 2;
-  } else if (score >= 200) {
-    starCompleted.value = 1;
-  } else {
-    starCompleted.value = 0; // Valeur par défaut
-  }
-}
 
 function animateText(element, text, delay) {
   element.innerHTML = ""; // Vider l'élément
   const letters = text.split("");
-<script>
-import { ref } from 'vue';
-function createComponent() {
-  return {
-    data() {
-      return {
-        RecapView: false,
-        // score: 15,
-        speed: 12,
-        duration: 60,
-        coleur: ref(false),
-        starCompleted: null
-      };
-    },
-    // const coleur = ref(false);
-    methods: {
-
-      animateText(element, text, delay) {
-        element.innerHTML = ""; // Vider l'élément
-        const letters = text.split("");
 
   letters.forEach((letter, index) => {
     setTimeout(() => {
@@ -77,19 +32,12 @@ function startAnimation() {
   const startButton = document.getElementById("start-button");
 
   startButton.style.display = "block";
-        this.animateText(titleElement, titleText, 100); // 200 ms pour le titre
 
   animateText(titleElement, titleText, 30); // 30 ms pour le titre
-        setTimeout(() => {
-          this.animateText(paragraphElement, paragraphText, 50); // 200 ms pour le paragraphe
-        }, titleText.length * 200 + 50); // Délai après le titre
 
   setTimeout(() => {
     animateText(paragraphElement, paragraphText, 70); // 70 ms pour le paragraphe
   }, titleText.length * 30);
-        setTimeout(() => {
-          this.animateText(h2Element, h2Text, 80); // 200 ms pour le h2
-        }, (titleText.length + paragraphText.length) * 200 + 100); // Délai après le paragraphe
 
   setTimeout(() => {
     animateText(h2Element, h2Text, 70); // 70 ms pour le h2
@@ -102,22 +50,6 @@ onMounted(() => {
 
 
 
-        setTimeout(() => {
-          startButton.style.display = "block"; // Afficher le bouton
-        }, (titleText.length + paragraphText.length + h2Text.length) * 200 + 110); // Délai après le h2
-      }
-
-
-    },
-
-    mounted() {
-      // this.updateScore(1000); 
-      this.startAnimation(); // Démarrer l'animation après le montage
-    }
-  };
-}
-
-export default createComponent();
 
 </script>
 
@@ -144,11 +76,14 @@ export default createComponent();
       <section class="cta">
         <h2 id="animation-h2">Prêt à commencer?</h2>
         <div class="aligne">
-          <button class="btn" id="start-button" style="display: none;"><router-link to="/sprint"><img src="../assets/plays.svg" alt=""></router-link></button>
+          <button class="btn" id="start-button" style="display: none;"><router-link
+              to="/sprint">Start</router-link></button>
         </div>
       </section>
     </div>
   </div>
+
+
   <!-- /*********************recap***************************** */ -->
   <div class="Rcp">
     <div class="recap" v-if="RecapView">
@@ -189,7 +124,6 @@ export default createComponent();
       </div>
     </div>
   </div>
-
 </template>
 
 
@@ -301,7 +235,7 @@ p {
 .btn {
   display: inline-block;
   padding: 10px 10px;
-  background-color: white;
+  background-color: rgb(128, 117, 117);
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -317,249 +251,6 @@ p {
   /* text-align: center; */
   margin-top: 20px;
   padding-left: 50px;
-}
-
-/**************************************  Css REcapView ***********************************************/
-
-/* Ajoutez une classe pour les étoiles jaunes */
-.star {
-  font-size: 24px;
-  /* Ajustez la taille selon vos préférences */
-}
-
-.star.yellow img {
-  filter: brightness(1.5);
-  /* Exemple pour éclaircir l'étoile */
-}
-
-.star-container {
-  display: flex;
-  /* Changer la mise en page des étoiles */
-  justify-content: center;
-  /* Centrer les étoiles */
-}
-
-.recap {
-  /* background-image: url('../assets/cl6.jpg'); */
-  /* background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover; */
-
-  background-image: url("../assets/cl9.jpg");
-  background: transparent;
-  background-size: cover;
-  backdrop-filter: blur(50px);
-
-
-  width: 50%;
-  margin: auto;
-
-  /* height: 850px;  */
-  /*********/
-  /* padding-top: 150px; */
-  background-color: #FFFFFF00;
-  position: absolute;
-  /* top: 0;
-  left: 250px; */
-
-
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-
-  /************************ */
-
-
-
-}
-
-h2 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.sommaire {
-  text-align: center;
-  margin: 20px;
-}
-
-.summary-container {
-  display: flex;
-  flex-wrap: wrap;
-  /* Permet de passer à la ligne */
-  justify-content: center;
-  margin: 20px 0;
-  gap: 100px;
-  /* Réduit l'écart sur les petits écrans */
-}
-
-.circle {
-  border: 5px solid;
-  /* border-radius: 50%; */
-  width: 150px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.dure {
-  text-align: center;
-}
-
-.circle-content {
-  font-size: 16px;
-  text-align: center;
-}
-
-.btnR {
-  text-align: center;
-  padding: 20px;
-  /* background-color: red; */
-
-}
-
-button {
-  color: red;
-  background-color: black;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  padding: 20px;
-}
-/* .btn:hover {
-  background-color: #E64A19;
-} */
-
-
-@media (max-width: 768px) {
-  header {
-    padding: 15px;
-  }
-
-  .btn {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 2em;
-  }
-
-  h2 {
-    font-size: 1.5em;
-  }
-
-  p {
-    font-size: 1em;
-  }
-}
-
-@media (max-width: 480px) {
-  .circle {
-    width: 60px;
-    height: 60px;
-  }
-
-  .circle-content {
-    font-size: 12px;
-  }
-
-  .star {
-    font-size: 18px;
-  }
-}
-
-/* *********css confetti */
-.Rcp {
-  background: #f0f8ff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-
-}
-
-.sommaire h2 {
-  color: #333;
-  font-family: 'Arial', sans-serif;
-}
-
-.star-container {
-  margin: 10px 0;
-}
-
-.star {
-  font-size: 24px;
-}
-
-.summary-container {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
-}
-
-.circle {
-  background: black;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s;
-}
-
-.circle:hover {
-  transform: scale(1.05);
-}
-
-.circle-content p {
-  margin: 5px 0;
-  font-family: 'Arial', sans-serif;
-}
-
-.dure {
-  color: #9b5b5b;
-  font-size: 14px;
-}
-
-.btnR {
-  margin-top: 20px;
-  text-align: center;
-}
-
-button {
-  /* background-color: #4CAF50; */
-  /* color: black; */
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  /* background-color: #45a049; */
-}
-
-/************************************ */
-.star-container {
-  display: flex;
-  /* Changer la mise en page des étoiles */
-  justify-content: center;
-  /* Centrer les étoiles */
-}
-
-.star {
-  font-size: 24px;
-  /* Ajustez la taille selon vos préférences */
-  margin: 0 2px;
-  /* Ajoutez un espace entre les étoiles */
 }
 
 
@@ -601,14 +292,5 @@ button:hover {
 .deconnecte:hover {
   background-color: #ff1a1a;
   /* Couleur au survol */
-}
-  header {
-    padding: 10px;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 12px 0;
-  }
 }
 </style>

@@ -10,7 +10,7 @@ function affichage() {
     elem[0].style.display = "none"
     elem[1].style.display = "block"
 
-},5000)
+},1000)
     
 }
 

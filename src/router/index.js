@@ -5,13 +5,14 @@ import TypingView from '@/views/TypingView.vue'
 import Login from '@/views/Login.vue'
 import Sign from '@/views/sign.vue'
 import SkillSprint from '@/views/SkillSprint.vue'
+import Principale from '@/views/principale.vue'
 
 let isAuthenticated = false; 
 const routes = [
   {
     path: '/',
     name: 'login',
-    component: Login
+    component: Principale
   },
   {
     path: '/sign',

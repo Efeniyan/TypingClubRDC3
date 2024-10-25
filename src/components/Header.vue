@@ -1,4 +1,9 @@
 <script setup>
+import { ref } from 'vue';
+
+const refreshPage = () => {
+  window.location.reload();
+};
 </script>
 
 <template>
@@ -10,7 +15,7 @@
           <img src="../assets/svg/home_24dp_75FB4C_FILL0_wght400_GRAD0_opsz24.svg" alt="Home" />
         </RouterLink>
       </li>
-      <li>
+      <li @click="refreshPage"> <!-- Ajout de l'événement click -->
         <img src="../assets/svg/refresh_24dp_75FB4C_FILL0_wght400_GRAD0_opsz24.svg" alt="Refresh" />
       </li>
       <li>
@@ -38,16 +43,14 @@ nav {
   font-size: 25px;
 }
 
-
 ul {
-    width: 25%;
+  width: 25%;
   display: flex;
   justify-content: space-between; /* Espacement uniforme */
   align-items: center; /* Alignement vertical */
   margin: 0; /* Supprime le margin par défaut */
   padding: 0; /* Supprime le padding par défaut */
 }
-
 
 li {
   list-style-type: none;
@@ -71,9 +74,10 @@ img {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
 @keyframes example {
-to { left: 0px}
-from { left: 100px}
+  to { left: 0px }
+  from { left: 100px }
 }
 
 img:hover {
