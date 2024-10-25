@@ -21,7 +21,7 @@ let lastKey = ref('');
 let phrase = ref([]);
 let newPhrase = ref([]);
 let g = -1;
-let inputText = ref('');
+let inputText = ref([]);
 let totalLength = newPhrase.value.length;
 const progress = ref(0);
 
@@ -33,26 +33,32 @@ function pressKeyUp(event) {
     const listSpan = document.querySelectorAll(".maClasse")
     // console.log(listSpan);
     //  console.log( g++);
-    inputText.value += lastKey.value;
-    // console.log(inputText);
+    
+    inputText.value.push(lastKey.value);
 
+    // while (lastKey.value === "Backspace") {
+    //     inputText.value = inputText.value.slice(0, -1);
+    // }
 
     g++;
     for (let i = g; i < newPhrase.value.length; i++) {
+        if (lastKey.value === "Backspace") {
+            inputText.value = inputText.value.slice(0, -2);
+        }
+
+
         progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
 
         if (lastKey.value === "Backspace") {
+            console.log(lastKey.value);
+            
             g -= 2;
             listSpan[i - 1].style.backgroundColor = "brown";
             listSpan[i - 1].style.borderBottom = "solid 2px";
-            // return alert("Cornard");
-            if (newPhrase.value[i - 1] === lastKey.value) {
-                listSpan[i - 1].style.backgroundColor = "black";
-                console.log(newPhrase.value.length);
-                return;
+            if (listSpan[0]=== "") {
+                inputText.value.length = 0;
             }
             return;
-
         }
 
         else if (newPhrase.value[i] === lastKey.value) {
@@ -80,9 +86,6 @@ function pressKeyUp(event) {
 
 
     };
-
-
-
 
 };
 
