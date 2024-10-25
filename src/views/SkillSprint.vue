@@ -12,6 +12,7 @@
         <p>{{ format }}</p>
         <p>Precision: {{ precisionTotale }}%</p>
         <p>Vitesse: {{ vitesse }}MPM</p>
+        <p>Score: {{ score }} points</p>
     </div>
 </template>
 
@@ -22,7 +23,7 @@ import Header from '@/components/Header.vue';
 import { onMounted, ref, computed } from 'vue';
 
 let RecapView = ref(false);
-let score = 15;
+// let score = 15;
 let speed = 12;
 let duration = 60;
 let coleur = ref(false);
@@ -40,6 +41,7 @@ const precisonGreen = ref(null);
 const precisonOrange = ref(null);
 const precisionTotale = ref(null);
 const vitesse = ref(null);
+const score = ref(null);
 const totalSeconds = ref(null);
 const interval = ref(null);
 const format = ref("");
@@ -47,49 +49,45 @@ const format = ref("");
 function startChrono() {
     interval.value = setInterval(() => {
         totalSeconds.value++;
-      }, 1000);
-    };
+    }, 1000);
+};
 
-    function stopTimer() {
-        clearInterval(interval.value);
-    };
+function stopTimer() {
+    clearInterval(interval.value);
+};
 
-    function pressKeyUp(event) {
+function pressKeyUp(event) {
 
-        format.value = computed(() => {
-            const minutes = Math.floor(totalSeconds.value / 60);
-            const seconds = totalSeconds.value % 60;
+    format.value = computed(() => {
+        const minutes = Math.floor(totalSeconds.value / 60);
+        const seconds = totalSeconds.value % 60;
 
-            return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
-        });
-        lastKey.value = event.key;
+        return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+    });
+    lastKey.value = event.key;
 
-        // console.log(event);
+    // console.log(event);
 
-        const listSpan = document.querySelectorAll(".maClasse")
-        // console.log(listSpan);
-        //  console.log( g++);
-        // console.log(inputText);
-        inputText.value.push(lastKey.value)
-        console.log(inputText.value.length);
+    const listSpan = document.querySelectorAll(".maClasse")
+    // console.log(listSpan);
+    //  console.log( g++);
+    // console.log(inputText);
+    inputText.value.push(lastKey.value)
+    console.log(inputText.value.length);
 
 
-        g++;
-        for (let i = g; i < newPhrase.value.length; i++) {
-            if (inputText.value.length === 1 && listSpan[i].style.backgroundColor !== "brown") {
-                startChrono();
-            }
-            if (lastKey.value === "Backspace") {
-                inputText.value = inputText.value.slice(0, -2);
-            }
-            progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
+    g++;
+    for (let i = g; i < newPhrase.value.length; i++) {
+        if (inputText.value.length === 1 && listSpan[i].style.backgroundColor !== "brown") {
+            startChrono();
+        }
 
-            if (g === newPhrase.value.length - 1) {
-                if (newPhrase.value[i] === lastKey.value) {
-                    listSpan[i].style.backgroundColor = "green";
+        if (g === newPhrase.value.length - 1) {
+            if (newPhrase.value[i] === lastKey.value) {
+                listSpan[i].style.backgroundColor = "green";
 
-                } else {
-                    listSpan[i].style.backgroundColor = "red";
+            } else {
+                listSpan[i].style.backgroundColor = "red";
 
             }
             setTimeout(() => {
@@ -119,18 +117,24 @@ function startChrono() {
 
                 precisionTotale.value = precisonGreen.value + precisonOrange.value;
 
-                    console.log(" precisionTotale", precisionTotale.value);
+                console.log(" precisionTotale", precisionTotale.value);
 
-                    //Fonction de vitesse par mot
-                    let x = newPhrase.value.join("");
-                    x = x.split(" ");
-                    vitesse.value = Math.floor((x.length * 60) / totalSeconds.value);
-                    console.log(x);
-                    console.log("vitesse:", vitesse.value);
+                //Fonction de vitesse par mot
+                let x = newPhrase.value.join("");
+                x = x.split(" ");
+                vitesse.value = Math.floor((x.length * 60) / totalSeconds.value);
+                console.log(x);
+                console.log("vitesse:", vitesse.value);
 
-                    stopTimer();
+                //Fonction de score
+                score.value = Math.floor((precisionTotale.value *1000) / 100);
+                console.log(score.value);
+                
 
-                    return
+
+                stopTimer();
+
+                return
 
 
 
@@ -140,13 +144,9 @@ function startChrono() {
             if (lastKey.value === "Backspace") {
                 inputText.value = inputText.value.slice(0, -2);
             }
-
-
             progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
 
             if (lastKey.value === "Backspace") {
-                console.log(lastKey.value);
-
                 g -= 2;
                 listSpan[i - 1].style.backgroundColor = "brown";
                 listSpan[i - 1].style.borderBottom = "solid 2px";
@@ -186,13 +186,13 @@ function startChrono() {
 
 };
 
-    function choosePhrase() {
-        const tableau = [
-            "orem ipsum dolor sit amet consectetur adipisicing elit.",
-            "atus fugiat dolore, neque, blanditiis labore doloribus,",
-            "quia quidem explicabo libero cum ",
-            "cum esse quae quaerat quam excepturi.",
-        ]
+function choosePhrase() {
+    const tableau = [
+        "orem ipsum dolor sit amet consectetur adipisicing elit.",
+        "atus fugiat dolore, neque, blanditiis labore doloribus,",
+        "quia quidem explicabo libero cum ",
+        "cum esse quae quaerat quam excepturi.",
+    ]
 
     phrase.value = tableau[Math.floor(Math.random() * (tableau.length))];
     // console.log(phrase.value);
@@ -239,12 +239,12 @@ function updateStars(score) {
 
 
 
-    onMounted(() => {
-        window.addEventListener('keyup', (event) => pressKeyUp(event));
-        choosePhrase();
-        maPhrase();
+onMounted(() => {
+    window.addEventListener('keyup', (event) => pressKeyUp(event));
+    choosePhrase();
+    maPhrase();
 
-    });
+});
 
 </script>
 
@@ -302,278 +302,5 @@ function updateStars(score) {
     background: #4caf50;
     /* Couleur de progression */
     transition: width 0.3s ease-in-out;
-}
-
-/**************************************  Css REcapView ***********************************************/
-
-/* Ajoutez une classe pour les étoiles jaunes */
-.star {
-    font-size: 24px;
-    /* Ajustez la taille selon vos préférences */
-}
-
-.star.yellow img {
-    filter: brightness(1.5);
-    /* Exemple pour éclaircir l'étoile */
-}
-
-.star-container {
-    display: flex;
-    /* Changer la mise en page des étoiles */
-    justify-content: center;
-    /* Centrer les étoiles */
-}
-
-.recap {
-    /* background-image: url('../assets/cl6.jpg'); */
-    /* background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover; */
-
-    background-image: url("../assets/cl9.jpg");
-    background: transparent;
-    background-size: cover;
-    backdrop-filter: blur(50px);
-
-
-    width: 50%;
-    margin: auto;
-
-    /* height: 850px;  */
-    /*********/
-    /* padding-top: 150px; */
-    background-color: #FFFFFF00;
-    position: absolute;
-    /* top: 0;
-  left: 250px; */
-
-
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-
-    /************************ */
-
-
-
-}
-
-h2 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.sommaire {
-    text-align: center;
-    margin: 20px;
-}
-
-.summary-container {
-    display: flex;
-    flex-wrap: wrap;
-    /* Permet de passer à la ligne */
-    justify-content: center;
-    margin: 20px 0;
-    gap: 100px;
-    /* Réduit l'écart sur les petits écrans */
-}
-
-.circle {
-    border: 5px solid;
-    /* border-radius: 50%; */
-    width: 150px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.dure {
-    text-align: center;
-}
-
-.circle-content {
-    font-size: 16px;
-    text-align: center;
-}
-
-/* 
-.star-container {
-  position: relative;
-  height: 100px;
-  margin: auto;
-  padding-top: 2%;
-}
-
-.star {
-  position: absolute;
-  font-size: 24px;
-}
-
-.star:nth-child(1) {
-  left: 30%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(2) {
-  left: 40%;
-  top: 30%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(3) {
-  left: 50%;
-  top: 10%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(4) {
-  left: 60%;
-  top: 30%;
-  transform: translate(-50%, -50%);
-}
-
-.star:nth-child(5) {
-  left: 70%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-} */
-
-.btnR {
-    text-align: center;
-    padding: 20px;
-    /* background-color: red; */
-
-}
-
-button {
-    color: red;
-    background-color: black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    padding: 20px;
-}
-
-
-@media (max-width: 768px) {
-    .circle {
-        width: 80px;
-        height: 80px;
-    }
-
-    .circle-content {
-        font-size: 14px;
-    }
-
-    .star {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .circle {
-        width: 60px;
-        height: 60px;
-    }
-
-    .circle-content {
-        font-size: 12px;
-    }
-
-    .star {
-        font-size: 18px;
-    }
-}
-
-/* *********css confetti */
-.Rcp {
-    background: #f0f8ff;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: auto;
-    text-align: center;
-}
-
-.sommaire h2 {
-    color: #333;
-    font-family: 'Arial', sans-serif;
-}
-
-.star-container {
-    margin: 10px 0;
-}
-
-.star {
-    font-size: 24px;
-}
-
-.summary-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-}
-
-.circle {
-    background: black;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s;
-}
-
-.circle:hover {
-    transform: scale(1.05);
-}
-
-.circle-content p {
-    margin: 5px 0;
-    font-family: 'Arial', sans-serif;
-}
-
-.dure {
-    color: #9b5b5b;
-    font-size: 14px;
-}
-
-.btnR {
-    margin-top: 20px;
-}
-
-button {
-    /* background-color: #4CAF50; */
-    /* color: black; */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    /* background-color: #45a049; */
-}
-
-/************************************ */
-.star-container {
-    display: flex;
-    /* Changer la mise en page des étoiles */
-    justify-content: center;
-    /* Centrer les étoiles */
-}
-
-.star {
-    font-size: 24px;
-    /* Ajustez la taille selon vos préférences */
-    margin: 0 2px;
-    /* Ajoutez un espace entre les étoiles */
 }
 </style>
