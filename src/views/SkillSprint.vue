@@ -11,7 +11,7 @@
     <div class="chrono">
         <p>{{ format }}</p>
     </div>
-    <button class="btn" id="start-button"  @click="toggleRecap()" style=""> commencer</button>
+    <button class="btn" id="start-button" @click="toggleRecap()" style=""> commencer</button>
 
 
     <div class="Rcp">
@@ -76,7 +76,6 @@ let lastKey = ref('');
 let phrase = ref([]);
 let newPhrase = ref([]);
 let g = -1;
-let inputText = ref('');
 let inputText = ref([]);
 let totalLength = newPhrase.value.length;
 const progress = ref(0);
@@ -90,136 +89,133 @@ const totalSeconds = ref(null);
 const interval = ref(null);
 const format = ref("");
 
-    function startChrono() {
-        interval.value = setInterval(() => {
+function startChrono() {
+    interval.value = setInterval(() => {
         totalSeconds.value++;
-      }, 1000);
-    };
-    
-    
-    function pressKeyUp(event) {
-        
-        startChrono();
-        format.value = computed(() => {
-         const minutes = Math.floor(totalSeconds.value / 60);
-         const seconds = totalSeconds.value % 60;
-         
-         return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
-       } );
+    }, 1000);
+};
+
+
+function pressKeyUp(event) {
+
+    startChrono();
+    format.value = computed(() => {
+        const minutes = Math.floor(totalSeconds.value / 60);
+        const seconds = totalSeconds.value % 60;
+
+        return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+    });
     lastKey.value = event.key;
-    
+
     // console.log(event);
 
     const listSpan = document.querySelectorAll(".maClasse")
-    
+
     inputText.value.push(lastKey.value);
 
-    // while (lastKey.value === "Backspace") {
-    //     inputText.value = inputText.value.slice(0, -1);
-    // }
 
     g++;
-    for (let i = g; i < newPhrase.value.length ; i++) {
-    progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
-    if (g === newPhrase.value.length -1 ) {
-        if (newPhrase.value[i] === lastKey.value) {
-            listSpan[i].style.backgroundColor = "green";
-            
-        } else {
-            listSpan[i].style.backgroundColor = "red";
-
-        }
-        setTimeout(() => {
-             alert("Vous aviez fini le jeu")
-             console.log(listSpan);
-
-             //Fonction de precision
-
-            listSpan.forEach((elem, index) => {
-                if(elem.style.backgroundColor === "green") {
-                    precisionTabGreen.value.push(elem)
-                }
-            })
-            console.log("precisionTabGreen", precisionTabGreen.value);
-            
-            precisonGreen.value = Math.floor((precisionTabGreen.value.length / newPhrase.value.length) * 100);
-            console.log("precisonGreen", precisonGreen.value);
-
-            listSpan.forEach((elem, index) => {
-                if(elem.style.backgroundColor === "orange") {
-                    precisionTabOrange.value.push(elem)
-                }
-            })
-            console.log("precisionTabOrange", precisionTabOrange.value);
-            precisonOrange.value = Math.floor(((precisionTabOrange.value.length / 2) / newPhrase.value.length *100));
-            console.log("precisonOrange", precisonOrange.value);
-
-            precisionTotale.value = precisonGreen.value + precisonOrange.value;
-
-            console.log(" precisionTotale",  precisionTotale.value);
-            
-            //Fonction de vitesse par mot
-            let x = newPhrase.value.join("");
-            x = x.split(" ");
-            vitesse.value = Math.floor((x.length * 60) / totalSeconds.value);
-            console.log( x);
-            console.log("vitesse:", vitesse.value);
-            
-
-            
-            return
-
-
-
-        }, 500)
-    } else{
     for (let i = g; i < newPhrase.value.length; i++) {
-        if (lastKey.value === "Backspace") {
-            inputText.value = inputText.value.slice(0, -2);
-        }
-
-
         progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
-
-        if (lastKey.value === "Backspace") {
-            console.log(lastKey.value);
-            
-            g -= 2;
-            listSpan[i - 1].style.backgroundColor = "brown";
-            listSpan[i - 1].style.borderBottom = "solid 2px";
-            if (listSpan[0]=== "") {
-                inputText.value.length = 0;
-            }
-            return;
-            
-        }
-        else if (newPhrase.value[i] === lastKey.value) {
-            if (listSpan[i].style.backgroundColor === "brown") {
-                console.log(listSpan[i].style.backgroundColor);
-                
-                listSpan[i].style.backgroundColor = "orange";
-
-                return;
-            } else {
+        if (g === newPhrase.value.length - 1) {
+            if (newPhrase.value[i] === lastKey.value) {
                 listSpan[i].style.backgroundColor = "green";
+
+            } else {
+                listSpan[i].style.backgroundColor = "red";
+
+            }
+            setTimeout(() => {
+                alert("Vous aviez fini le jeu")
+                console.log(listSpan);
+
+                //Fonction de precision
+
+                listSpan.forEach((elem, index) => {
+                    if (elem.style.backgroundColor === "green") {
+                        precisionTabGreen.value.push(elem)
+                    }
+                })
+                console.log("precisionTabGreen", precisionTabGreen.value);
+
+                precisonGreen.value = Math.floor((precisionTabGreen.value.length / newPhrase.value.length) * 100);
+                console.log("precisonGreen", precisonGreen.value);
+
+                listSpan.forEach((elem, index) => {
+                    if (elem.style.backgroundColor === "orange") {
+                        precisionTabOrange.value.push(elem)
+                    }
+                })
+                console.log("precisionTabOrange", precisionTabOrange.value);
+                precisonOrange.value = Math.floor(((precisionTabOrange.value.length / 2) / newPhrase.value.length * 100));
+                console.log("precisonOrange", precisonOrange.value);
+
+                precisionTotale.value = precisonGreen.value + precisonOrange.value;
+
+                console.log(" precisionTotale", precisionTotale.value);
+
+                //Fonction de vitesse par mot
+                let x = newPhrase.value.join("");
+                x = x.split(" ");
+                vitesse.value = Math.floor((x.length * 60) / totalSeconds.value);
+                console.log(x);
+                console.log("vitesse:", vitesse.value);
+
+
+
+                return
+
+
+
+            }, 500)
+        } else {
+
+            if (lastKey.value === "Backspace") {
+                inputText.value = inputText.value.slice(0, -2);
+            }
+
+
+            progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
+
+            if (lastKey.value === "Backspace") {
+                console.log(lastKey.value);
+
+                g -= 2;
+                listSpan[i - 1].style.backgroundColor = "brown";
+                listSpan[i - 1].style.borderBottom = "solid 2px";
+                if (listSpan[0] === "") {
+                    inputText.value.length = 0;
+                }
+                return;
+
+            }
+            else if (newPhrase.value[i] === lastKey.value) {
+                if (listSpan[i].style.backgroundColor === "brown") {
+                    console.log(listSpan[i].style.backgroundColor);
+
+                    listSpan[i].style.backgroundColor = "orange";
+
+                    return;
+                } else {
+                    listSpan[i].style.backgroundColor = "green";
+                    listSpan[i].style.borderBottom = "none";
+                    listSpan[i + 1].style.borderBottom = "solid 2px";
+                    return;
+                }
+                // console.log(newPhrase.value.length);
+                // return;
+            } else {
+                listSpan[i].style.backgroundColor = "red";
                 listSpan[i].style.borderBottom = "none";
                 listSpan[i + 1].style.borderBottom = "solid 2px";
+                console.log(progress.value);
                 return;
-            }
-            // console.log(newPhrase.value.length);
-            // return;
-        } else {
-            listSpan[i].style.backgroundColor = "red";
-            listSpan[i].style.borderBottom = "none";
-            listSpan[i + 1].style.borderBottom = "solid 2px";
-            console.log(progress.value);
-            return;
+            };
+
+
         };
-
-
-    };
     }
-    
+
 
 };
 
@@ -245,7 +241,7 @@ function toggleRecap() {
     RecapView.value = !RecapView.value;
     updateScore(500);
     console.log(RecapView.value);
-    
+
 };
 
 function updateScore(newScore) {
