@@ -10,6 +10,8 @@
     </div>
     <div class="chrono">
         <p>{{ format }}</p>
+        <p>Precision: {{ precisionTotale }}%</p>
+        <p>Vitesse: {{ vitesse }}MPM</p>
     </div>
 </template>
 
@@ -41,30 +43,37 @@ const format = ref("");
         totalSeconds.value++;
       }, 1000);
     };
-    
+
+    function stopTimer() {
+       clearInterval(interval.value);
+    };
     
     function pressKeyUp(event) {
         
-        startChrono();
         format.value = computed(() => {
-         const minutes = Math.floor(totalSeconds.value / 60);
-         const seconds = totalSeconds.value % 60;
-         
-         return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
-       } );
-    lastKey.value = event.key;
-    
-    // console.log(event);
-
-    const listSpan = document.querySelectorAll(".maClasse")
-    // console.log(listSpan);
-    //  console.log( g++);
-    inputText.value += lastKey.value;
-    // console.log(inputText);
-
-
-    g++;
-    for (let i = g; i < newPhrase.value.length ; i++) {
+            const minutes = Math.floor(totalSeconds.value / 60);
+            const seconds = totalSeconds.value % 60;
+            
+            return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+        } );
+        lastKey.value = event.key;
+        
+        // console.log(event);
+        
+        const listSpan = document.querySelectorAll(".maClasse")
+        // console.log(listSpan);
+        //  console.log( g++);
+        inputText.value += lastKey.value;
+        // console.log(inputText);
+        
+        
+        
+        g++;
+        for (let i = g; i < newPhrase.value.length ; i++) {
+        if (inputText.value.length === 1 && listSpan[i].style.backgroundColor !== "brown") {
+            startChrono();
+        }
+        
     progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
     if (g === newPhrase.value.length -1 ) {
         if (newPhrase.value[i] === lastKey.value) {
@@ -110,7 +119,7 @@ const format = ref("");
             console.log( x);
             console.log("vitesse:", vitesse.value);
             
-
+            stopTimer();
             
             return
 
