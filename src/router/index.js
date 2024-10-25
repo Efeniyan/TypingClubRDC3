@@ -4,6 +4,7 @@ import RecapView from '@/views/RecapView.vue'
 import TypingView from '@/views/TypingView.vue'
 import Login from '@/views/Login.vue'
 import Sign from '@/views/sign.vue'
+import SkillSprint from '@/views/SkillSprint.vue'
 
 let isAuthenticated = false; 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
     path: '/recap',
     name: 'recap',
     component: RecapView
+  },
+  {
+    path: '/sprint',
+    name: 'sprint',
+    component: SkillSprint
   }
 ];
 const router = createRouter({
