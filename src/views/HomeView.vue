@@ -109,7 +109,7 @@ export default createComponent();
       </section>
     </div>
   </div>
-
+/*********************recap***************************** */
   <div class="Rcp">
     <div class="recap" v-if="RecapView">
       <div class="sommaire">
@@ -158,12 +158,10 @@ export default createComponent();
 
 <style scoped>
 /********************************* */
-.star.yellow svg {
-            /* filter: brightness(0) saturate(100%) invert(47%) sepia(100%) saturate(659%) hue-rotate(47deg) brightness(90%) contrast(98%); */
-
+/* .star.yellow svg {
             fill: yellow;
             stroke: gray;
-        }
+        } */
 
 #animation-title, #animation-paragraph, #animation-h2 {
     display: inline-block;
@@ -171,9 +169,9 @@ export default createComponent();
     opacity: 0; 
     transition: opacity 0.5s ease;
 }
-.coleur{
+/* .coleur{
   background-color: yellow;
-}
+} */
 
 .home2{
   background: transparent;
