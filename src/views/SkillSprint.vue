@@ -40,6 +40,7 @@ function pressKeyUp(event) {
         }
 
 
+
         progress.value = Math.min((inputText.value.length / newPhrase.value.length) * 100, 100);
 
         if (lastKey.value === "Backspace") {
